@@ -18,6 +18,13 @@ namespace Heaps
             }
         }
         private int size;
+        public int Size
+        {
+            get
+            {
+                return size;
+            }
+        }
         public Heap(Comparison<T> comparer, int capacity)
         {
             Comparer = comparer;
@@ -29,7 +36,7 @@ namespace Heaps
         {
             if (size >= Capacity)
             {
-                Resize((Capacity - 1) * 2);
+                Resize((Capacity) * 2);
             }
             heap[size] = value;
             heapifyUp(size);
@@ -41,7 +48,7 @@ namespace Heaps
         {
             if(heap.Length <= 1)
             {
-                return null;
+                throw new IndexOutOfRangeException("Heap was empty.");
             }
             T least = heap[1];
             size--;
@@ -93,9 +100,9 @@ namespace Heaps
 
         void Resize(int newCapactity)
         {
-            int count = Math.Min(newCapactity + 1, Capacity);
+            int count = Math.Min(newCapactity, Capacity);
             T[] newHeap = new T[newCapactity];
-            for (int i = 0; i < count - 1; i++)
+            for (int i = 0; i < count; i++)
             {
                 newHeap[i] = heap[i];
             }

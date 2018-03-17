@@ -12,18 +12,42 @@ namespace Heaps
         {
 
             Heap<int> heap = new Heap<int>((int x, int y) => x - y, 1);
-            int[] vals = new int[] { 1, 5, 4, 6 };
-            foreach(int v in vals)
+            int[] vals = new int[1000];
+            Random rand = new Random();
+            for(int j = 0; j < vals.Length; j++)
+            {
+                vals[j] = rand.Next();
+            }
+            foreach (int v in vals)
             {
                 Console.Write(v.ToString() + ' ');
+                heap.Insert(v);
             }
             Console.WriteLine();
             int[] sorted = new int[vals.Length];
+            int i = 0;
             int num = 0;
             do
             {
                 num = heap.Pop();
-            } while (num != null);
+                sorted[i] = num;
+                i++;
+                Console.Write(num.ToString() + ' ');
+            } while (heap.Size > 1);
+            Console.WriteLine("\n" + (Sorted(sorted) ? "Sorted" : "NOT Sorted"));
+            Console.ReadKey();
+        }
+
+        static bool Sorted(int[] vals)
+        {
+            for (int i = 0; i < vals.Length - 2; i++)
+            {
+                if (vals[i + 1] < vals[i])
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
